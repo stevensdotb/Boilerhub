@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.css": "/boilerhub/static/css/main.697c046b.chunk.css",
+    "main.js": "/boilerhub/static/js/main.af4fe13b.chunk.js",
+    "main.js.map": "/boilerhub/static/js/main.af4fe13b.chunk.js.map",
+    "runtime-main.js": "/boilerhub/static/js/runtime-main.59af2f8a.js",
+    "runtime-main.js.map": "/boilerhub/static/js/runtime-main.59af2f8a.js.map",
+    "static/js/2.7e8d2177.chunk.js": "/boilerhub/static/js/2.7e8d2177.chunk.js",
+    "static/js/2.7e8d2177.chunk.js.map": "/boilerhub/static/js/2.7e8d2177.chunk.js.map",
+    "index.html": "/boilerhub/index.html",
+    "precache-manifest.a2a099a1ee9b5a23b54a51b34b215bc5.js": "/boilerhub/precache-manifest.a2a099a1ee9b5a23b54a51b34b215bc5.js",
+    "service-worker.js": "/boilerhub/service-worker.js",
+    "static/css/main.697c046b.chunk.css.map": "/boilerhub/static/css/main.697c046b.chunk.css.map",
+    "static/js/2.7e8d2177.chunk.js.LICENSE.txt": "/boilerhub/static/js/2.7e8d2177.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.59af2f8a.js",
+    "static/js/2.7e8d2177.chunk.js",
+    "static/css/main.697c046b.chunk.css",
+    "static/js/main.af4fe13b.chunk.js"
+  ]
+}
