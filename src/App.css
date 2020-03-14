@@ -1,21 +1,22 @@
 .App {
-  text-align: center;
   font-family: 'Source Sans Pro', sans-serif;
+  display: flex;
+  height: 100vh;
 }
 
-.boilerhub-logo {
+/* .boilerhub-logo {
   height: 40vmin;
   pointer-events: none;
   transform: scale(0.5);
-}
+} */
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   .boilerhub-logo {
     animation: boilerhub-logo-spin infinite 2s ;
   }
 }
-
-header {
+ */
+/* header {
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
@@ -30,9 +31,9 @@ header > p {
   font-size: 20px;
   margin: 0;
   transform: translateY(-20px);
-}
+}*/
 
-@keyframes boilerhub-logo-spin {
+/* @keyframes boilerhub-logo-spin {
   50% {
     visibility: hidden;
     opacity: 0;
@@ -40,4 +41,4 @@ header > p {
   50% {
     transform: scale(0.4);
   }
-}
+} */

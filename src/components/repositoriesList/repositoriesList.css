@@ -1,0 +1,18 @@
+.boilerhub-repositories {
+    flex: 3;
+    height: 100%;
+}
+
+.boilerhub-repositories > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+.boilerhub-repositories > div > p {
+    transform: scale(10);
+    color: lightgrey;
+    opacity: 0.4;
+}

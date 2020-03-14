@@ -1,17 +1,148 @@
+@import '../../css/colors.css';
+
+.boilerhub-logo{ height: 25vmin; }
+
+.boilerhub-side {
+    flex: 1;
+    height: 100%;
+    color: white;
+    background-color: var(--main-black);
+    padding: 30px 35px 15px;
+}
+
+.boilerhub-side > div {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
 header {
-    background-color: #282c34;
-    min-height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    font-size: calc(10px + 2vmin);
+    margin-bottom: 20px;
+}
+
+header > p {
+    text-align: center;
+    margin: 20px 8px;
+} 
+
+.boilerhub-filter {
+    flex-grow: 1;
+}
+
+.select-lenguage-input {
+    background-color: var(--dark-grey);
+    padding: 7px 15px;
+    border-radius: 4px;
+    border: 1px solid grey;
+    position: relative;
+}
+.footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    vertical-align: middle;
+}
+
+.footer .octicon {
+    margin-right: 8px;
+    transform: scale(1.3);
+}
+
+.footer small a{
     color: white;
 }
 
+.footer small:hover {
+    text-decoration: underline;
+}
 
-header .boilerhub-logo {
-    height: 40vmin;
-    pointer-events: none;
-    transform: scale(0.5);
+/* Bootstrap */
+.select-lenguage-input, .form-group input[type="text"] {
+    background-color: var(--dark-grey);
+    border: 1px solid grey;
+    color: var(--white-soft);
+    margin-bottom: 20px;
+}
+
+.form-group select, .form-group input[type="text"], button {
+    border-radius: 4px;
+}
+
+button {
+    float: right;
+    margin-top: 10px;
+    width: 100px;
+    padding: 8px;
+    border: none;
+}
+
+.btn:focus, .btn:active {
+    outline: none;
+    box-shadow: none;
+}
+
+
+@media only screen and (min-width: 1600px) {
+    .boilerhub-logo{ height: 19vmin; }
+
+    .boilerhub-side {
+        padding: 50px 35px 15px;
+    }
+
+    .boilerhub-filter {
+        margin-top: 40px;
+    }
+
+    header > p {
+        margin: 40px 10px;
+    }
+}
+
+/* Custom Select Input*/
+.select-lenguage-input {
+    cursor: pointer;
+}
+
+.select-lenguage-input > span {
+    float: right;
+}
+.select-text {
+    display: flex;
+    justify-content: space-between;
+}
+.select-text .placeholder {
+    color: #6c757d;
+}
+.select-dropdown {
+    overflow-y: auto;
+    max-height: 205px;
+    width: 100%;
+    margin-left: -15px;
+    position: absolute;
+    background: var(--dark-grey);
+    transform: translateY(5px);
+    border-radius: 0 0 4px 4px;
+    transition: opacity .14s ease-in;
+}
+
+.select-dropdown.close {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.select-dropdown.open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.select-dropdown div {
+    padding: 5px 15px;
+    cursor: pointer;
+}
+.select-dropdown div:hover {
+    background: var(--second-black);
 }
