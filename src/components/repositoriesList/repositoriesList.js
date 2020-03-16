@@ -29,7 +29,7 @@ class RepositoriesList extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            sort: {value: '', text: <b>Best match</b>}
+            sort: {value: '', text: <b>Best match</b>},
         }
     }
 
@@ -62,9 +62,14 @@ class RepositoriesList extends Component {
         }));
     }
 
+    randomLanguage() {
+        return this.progLangDot[Math.floor(Math.random()*this.progLangDot.length)];
+    }
+
     renderRepositoriesResult = () => {
         return Array.from({length: 15}, () => Math.floor(Math.random() * 15))
             .map((item, index) => {
+                const language = this.randomLanguage();
                 return (
                     <li class="_item d-flex py-4" key={index}>
                         <div class="flex-shrink-0 mr-2">
@@ -77,7 +82,8 @@ class RepositoriesList extends Component {
                             <p class="_description">The Web framework for perfectionists with deadlines.</p>
                             <div class="_details d-flex text-small text-gray">
                                 <div class="mr-3">
-                                    <Octicon icon={PrimitiveDot} className={this.progLangDot[Math.floor(Math.random()*this.progLangDot.length)].className}/> Python
+                                    <Octicon icon={PrimitiveDot} className={`mr-1 ${language.className}`}/>
+                                    {language.language.replace(/^\w/, c => c.toUpperCase())}
                                 </div>
                                 <div class="mr-3">
                                     Updated 3 hours ago
