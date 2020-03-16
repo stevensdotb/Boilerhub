@@ -29,7 +29,6 @@ class Sidebar extends Component {
      */
     toggleDropdown() {
         this.setState({ activeDropdown: !this.state.activeDropdown});
-        console.log(this.state.activeDropdown);
     }
 
     pickLanguage(language) {
@@ -71,8 +70,8 @@ class Sidebar extends Component {
                                         </div>
                                     </div>
                                     <div className={`select-dropdown ${!this.state.activeDropdown ? 'close' : 'open'}`}>
-                                        {this.languages.map(language => {
-                                            return <div onClick={() => this.pickLanguage(language)}>{language}</div>
+                                        {this.languages.map((language, index) => {
+                                            return <div key={index} onClick={() => this.pickLanguage(language)}>{language}</div>
                                         })}
                                     </div>
                                 </div>
