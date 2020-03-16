@@ -2,36 +2,49 @@
   font-family: 'Source Sans Pro', sans-serif;
   display: flex;
   height: 100vh;
+  font-size: 15px;
 }
 
-/* .boilerhub-logo {
-  height: 40vmin;
-  pointer-events: none;
-  transform: scale(0.5);
-} */
+h3, h4 {
+  font-weight: 600;
+  margin: 0;
+}
 
-/* @media (prefers-reduced-motion: no-preference) {
+h3 {
+  font-size: 20px;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+}
+
+p {
+  margin: 0;
+}
+
+.text-small {
+  font-size: 13px;
+}
+
+.text-gray {
+  color: #586069 !important;
+}
+
+.btn-success.focus, .btn-success:focus {
+  box-shadow: 0 0 0 #1b1b1b !important;
+}
+
+.btn:focus, .btn:active, .dropdown-toggle:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+@media (prefers-reduced-motion: no-preference) {
   .boilerhub-logo {
     animation: boilerhub-logo-spin infinite 2s ;
   }
 }
- */
-/* header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-header > p {
-  font-size: 20px;
-  margin: 0;
-  transform: translateY(-20px);
-}*/
 
 /* @keyframes boilerhub-logo-spin {
   50% {
