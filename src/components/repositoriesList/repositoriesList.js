@@ -77,7 +77,7 @@ class RepositoriesList extends Component {
                         </div>
                         <div class="_info">
                             <div class="_link">
-                                <a href="javascript:void(0)">django/<b>django</b></a>
+                                <a href="https://github.com/">django/<b>django</b></a>
                             </div>
                             <p class="_description">The Web framework for perfectionists with deadlines.</p>
                             <div class="_details d-flex text-small text-gray">
