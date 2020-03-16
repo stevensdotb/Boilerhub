@@ -1,0 +1,11 @@
+
+/* Programming languages DOTs */
+.c-dot { fill: #555555; }
+.cplus-dot { fill: #f34b7d }
+.html-dot { fill: #e34c26; }
+.javascript-dot { fill: #f1e05a; }
+.java-dot { fill: #b07219; }
+.php-dot { fill: #4F5D95; }
+.python-dot { fill: #3572A5 !important;}
+.shell-dot { fill: #89e051; }
+.typescript-dot { fill: #2b7489; }
