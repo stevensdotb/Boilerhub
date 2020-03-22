@@ -69,3 +69,9 @@
 .boilerhub-repositories ._sort .dropdown-menu .dropdown-item:last-child {
     border-bottom: none;
 }
+
+@media only screen and (min-width: 1600px) {
+    .boilerhub-repositories{
+        flex: 5 1;
+     }
+}

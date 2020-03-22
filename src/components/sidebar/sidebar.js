@@ -58,7 +58,7 @@ class Sidebar extends Component {
                                 {/* Language input */}
                                 <Form.Label>Pick a Language</Form.Label>
                                 {/* Select Languages dropdown */}
-                                <div className="select-lenguage-input" onClick={()=>this.toggleDropdown()}>
+                                <div className="select-lenguage-input" onMouseOver={()=>this.toggleDropdown()}  onMouseOut={()=>this.toggleDropdown()}>
                                     <div className="select-text">
                                         <div>{ !this.state.language
                                                 ? <span className="placeholder">(Optional)</span>
