@@ -110,7 +110,7 @@ class RepositoriesList extends Component {
                                     {
                                         this.sortOptions.map((option, index) => {
                                             return (
-                                                <Dropdown.Item eventKey="1" onClick={() => this.sortBy(option)} key={index}>
+                                                <Dropdown.Item key={index} eventKey="1" onClick={() => this.sortBy(option)}>
                                                     { this.state.sort.value === option.value ? <Octicon className="octicon" icon={Check}/> : '' } <span>{option.text}</span>
                                                 </Dropdown.Item>
                                             )
