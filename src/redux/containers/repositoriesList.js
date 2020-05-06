@@ -4,8 +4,10 @@ import { bindActionCreators } from 'redux';
 
 import languages from 'language-map';
 // Octicons
-import Octicon, {Repo, PrimitiveDot, ChevronDown, Check, Search} from '@primer/octicons-react';
+import Octicon, {Repo, PrimitiveDot, ChevronDown, Check, Search, MarkGithub} from '@primer/octicons-react';
 import { ButtonGroup, ButtonToolbar, DropdownButton, Dropdown, Pagination} from 'react-bootstrap';
+
+import { loadAllBoilerplates } from '../../redux/actions/search';
 
 class RepositoriesListContainer extends Component {
 
@@ -27,14 +29,16 @@ class RepositoriesListContainer extends Component {
         {value: 'forks', text: 'Most forks'},
         {value: 'updated', text: 'Recently Updated'},
     ]
+
+    state = {
+        sort: {value: '', text: <b>Best match</b>},
+        repositories: {}
+    }
     
     constructor(props) {
         super(props)
-        this.state = {
-            sort: {value: '', text: <b>Best match</b>},
-            repositories: {}
-        }
-        console.log(languages);
+        
+        this.props.searchAll();
     }
 
     async componentDidUpdate() {
@@ -91,8 +95,7 @@ class RepositoriesListContainer extends Component {
     renderRepositoriesResult = (repositories) => {
         return repositories.map((repo, index) => {
             // const language =  this.progLangDot.find(obj => obj.language === repo.language.toLowerCase()); // this.randomLanguage();
-            const language =  languages[repo.language]; // this.randomLanguage();
-            console.log(repo.language, language);
+            const language =  languages[repo.language];
             return (
                     <li className="_item d-flex py-4" key={index}>
                         <div className="flex-shrink-0 mr-2">
@@ -126,17 +129,19 @@ class RepositoriesListContainer extends Component {
     render() {
         const { repositories } = this.state;
         console.log(repositories);
+        const totalCount = repositories && repositories.total_count ? this.formatNumber(repositories.total_count) : 0;
+        console.log(totalCount);
         return (
             <div>
                 <div className="d-flex flex-column">
                     {/* Repositories results number and sort button */}
                     <div className="_results pb-3 pt-3">
                         <ButtonToolbar className="justify-content-between align-items-center btn-sm" aria-label="Toolbar with Button groups">
-                            <h3>{this.formatNumber(repositories.total_count)} repositories result</h3>
+                            <h3>{totalCount} repositories result</h3>
                             <ButtonGroup aria-label="First group" className="_sort position-relative">
                                 
                                 <Octicon className="octicon position-absolute" icon={ChevronDown}/>
-                                <DropdownButton variant="light" size="sm" as={ButtonGroup} title={['Sort: ', this.state.sort.text]} alignRight id="bg-nested-dropdown">
+                                <DropdownButton style={totalCount !== null && totalCount !== 0 ? {} : {pointerEvents: 'none', opacity: '0.6'}} variant="light" size="sm" as={ButtonGroup} title={['Sort: ', this.state.sort.text]} alignRight id="bg-nested-dropdown">
                                     {
                                         this.sortOptions.map((option, index) => {
                                             return (
@@ -152,10 +157,18 @@ class RepositoriesListContainer extends Component {
                         </ButtonToolbar>
                     </div>
                     {/* Repositories List */}
+                    {/* <div className="before-search-icon position-relative" style={{width: '100%'}}>
+                        <span>
+                            <Octicon className="octicon position-absolute" size={150} icon={Search}/>
+                        </span>
+                        <span style={{transform: 'translate(40px, 32px)'}}>
+                            <Octicon className="octicon position-absolute" size={50} icon={MarkGithub}/>
+                        </span>
+                    </div> */}
                     <ul className="_list">
-                        {repositories.items !== undefined ? this.renderRepositoriesResult(repositories.items) : 'It seems you have not search for repositories yet.'}
+                        {repositories && repositories.items !== undefined ? this.renderRepositoriesResult(repositories.items) : 'It seems you have not search for repositories yet.'}
                     </ul>
-                    {repositories.total_count && repositories.total_count > 15 ? (
+                    {repositories && repositories.total_count && repositories.total_count > 15 ? (
                         <div className="_pagination mx-auto mt-3">
                             <Pagination size="md">
                                 <Pagination.First />
@@ -178,4 +191,8 @@ const mapStateToProps = (state) => {
         repositories: state.search.repositories,
     }
 };
-export default connect(mapStateToProps)(RepositoriesListContainer);
+const searchAll = () => (loadAllBoilerplates());
+const mapDispatchToProps = (dispatch) => {
+    return bindActionCreators({searchAll}, dispatch);
+}
+export default connect(mapStateToProps, mapDispatchToProps)(RepositoriesListContainer);

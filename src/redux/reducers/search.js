@@ -6,7 +6,7 @@ import axios from 'axios';
  * @param {*} language 
  */
 const searchBoilerplate = async (url, sort = '') => {
-
+    console.log(url);
     try {
         const sortQs = !sort ? '' : `&sort=${sort}`;
         const request  = await axios.get(`${url}${sortQs}`);
@@ -63,14 +63,23 @@ const initialState = {
  }
 
  const searchReducer = (state = initialState, action) => {
-    switch ( action.type ) {
+     let url = 'https://api.github.com/search/repositories?q=boilerplate&per_page=15';
+     let repositories = searchBoilerplate(url);
+
+     switch ( action.type ) {
+         case 'LOAD_ALL_BOILERPLATES':
+             return {
+                 ...state,
+                 repositories
+             }
+
         case 'SEARCH_BOILERPLATE':
             const tool = action.payload.tool;
             const language = action.payload.language;
-            const languageQs = !language ? '' : `language:${language}`;
+            const languageQs = !language ? '' : `language:${encodeURIComponent(language)}`;
             const toolQs = !tool ? '' : `${tool}+`;
-            const url = `https://api.github.com/search/repositories?q=${toolQs}boilerplate+${languageQs}&per_page=15`
-            const repositories = searchBoilerplate(url);
+            url = `https://api.github.com/search/repositories?q=${toolQs}boilerplate+${languageQs}&per_page=15`;
+            repositories = searchBoilerplate(url);
 
             return {
                 ...state,
