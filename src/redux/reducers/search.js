@@ -6,7 +6,6 @@ import axios from 'axios';
  * @param {*} language 
  */
 const searchBoilerplate = async (url, sort = '') => {
-    console.log(url);
     try {
         const sortQs = !sort ? '' : `&sort=${sort}`;
         const request  = await axios.get(`${url}${sortQs}`);
@@ -15,6 +14,7 @@ const searchBoilerplate = async (url, sort = '') => {
             total_count: request.data.total_count,
             items: []
         };
+        console.log(request);
         // Buid the navigation links
         if ( request.headers.link ) {
             const links = request.headers.link.split(',');
@@ -46,7 +46,8 @@ const searchBoilerplate = async (url, sort = '') => {
                     description: repo.description,
                     url: repo.html_url,
                     language: repo.language,
-                    stargazers: repo.stargazers_count
+                    stargazers: repo.stargazers_count,
+                    updatedAt: repo.pushed_at
                 });
             }
         }
@@ -59,7 +60,8 @@ const searchBoilerplate = async (url, sort = '') => {
 }
 
 const initialState = {
-    repositories: []
+    repositories: {},
+    loader: false
  }
 
  const searchReducer = (state = initialState, action) => {
@@ -67,10 +69,18 @@ const initialState = {
      let repositories = searchBoilerplate(url);
 
      switch ( action.type ) {
+         case 'LOADER':
+             console.log("--------------------here loader");
+             return {
+                 ...state,
+                 repositories: action.payload.repositories,
+                 loader: action.payload.loader,
+             }
          case 'LOAD_ALL_BOILERPLATES':
              return {
                  ...state,
-                 repositories
+                 repositories,
+                 loader: false
              }
 
         case 'SEARCH_BOILERPLATE':
@@ -86,6 +96,7 @@ const initialState = {
                 repositories,
                 tool,
                 language,
+                loader: false
             }
         default: 
             return state;

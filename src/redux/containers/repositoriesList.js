@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-
+import loaderSvg from '../../octocat-spinner-128.gif';
+import moment from 'moment';
 import languages from 'language-map';
 // Octicons
 import Octicon, {Repo, PrimitiveDot, ChevronDown, Check, Search, MarkGithub} from '@primer/octicons-react';
 import { ButtonGroup, ButtonToolbar, DropdownButton, Dropdown, Pagination} from 'react-bootstrap';
 
 import { loadAllBoilerplates } from '../../redux/actions/search';
+
+import NotFound from '../../components/notFound/notfound';
 
 class RepositoriesListContainer extends Component {
 
@@ -30,17 +33,19 @@ class RepositoriesListContainer extends Component {
         {value: 'updated', text: 'Recently Updated'},
     ]
 
-    state = {
-        sort: {value: '', text: <b>Best match</b>},
-        repositories: {}
-    }
     
     constructor(props) {
         super(props)
-        
+        this.state = {
+            sort: {value: '', text: <b>Best match</b>},
+            activateLoader: false,
+            repositories: {}
+        }
         this.props.searchAll();
+        console.log(moment('2020-05-10T05:03:13Z').fromNow())
+        
     }
-
+    
     async componentDidUpdate() {
         const { repositories } = this.props;
         const returnRepositories = await this.wrapper(repositories);
@@ -78,7 +83,7 @@ class RepositoriesListContainer extends Component {
     }
 
     sortBy = (option) => {
-        console.log(this.props);
+        // console.log(this.props);
         this.setState(prevState => ({
             sort: {
                 ...prevState.sort,
@@ -94,8 +99,8 @@ class RepositoriesListContainer extends Component {
 
     renderRepositoriesResult = (repositories) => {
         return repositories.map((repo, index) => {
-            // const language =  this.progLangDot.find(obj => obj.language === repo.language.toLowerCase()); // this.randomLanguage();
-            const language =  languages[repo.language];
+            const language = languages[repo.language];
+            const updated = moment(new Date(repo.updatedAt)).fromNow();
             return (
                     <li className="_item d-flex py-4" key={index}>
                         <div className="flex-shrink-0 mr-2">
@@ -110,14 +115,12 @@ class RepositoriesListContainer extends Component {
                             <div className="_details d-flex text-small text-gray">
                                 {repo.language !== null ? (
                                     <div className="mr-3">
-                                        <span style={{color: !language.color ? '#55555' : language.color}}><Octicon icon={PrimitiveDot} className="mr-1"/></span>
-                                        {/* <Octicon icon={PrimitiveDot} className={`mr-1 ${!language ? 'default-dot' : language.className}`}/> */}
+                                        <span style={{color: !language || !language.color ? '#55555' : language.color}}><Octicon icon={PrimitiveDot} className="mr-1"/></span>
                                         {repo.language}
-                                        {/* {language.language.replace(/^\w/, c => c.toUpperCase())} */}
                                     </div>
                                 ) : null}
                                 <div className="mr-3">
-                                    Updated 3 hours ago
+                                    Updated {updated}
                                 </div>
                             </div>
                         </div>
@@ -126,11 +129,16 @@ class RepositoriesListContainer extends Component {
             });
     }
 
+    toggleLoader() {
+        return 
+    }
+
     render() {
+        console.log(this.props);
+        const { loader } = this.props;
         const { repositories } = this.state;
-        console.log(repositories);
         const totalCount = repositories && repositories.total_count ? this.formatNumber(repositories.total_count) : 0;
-        console.log(totalCount);
+
         return (
             <div>
                 <div className="d-flex flex-column">
@@ -138,16 +146,17 @@ class RepositoriesListContainer extends Component {
                     <div className="_results pb-3 pt-3">
                         <ButtonToolbar className="justify-content-between align-items-center btn-sm" aria-label="Toolbar with Button groups">
                             <h3>{totalCount} repositories result</h3>
+                            {repositories && !repositories.items ? <img src={loaderSvg} alt="Github Loader" width={35}/> : null}
                             <ButtonGroup aria-label="First group" className="_sort position-relative">
                                 
                                 <Octicon className="octicon position-absolute" icon={ChevronDown}/>
                                 <DropdownButton style={totalCount !== null && totalCount !== 0 ? {} : {pointerEvents: 'none', opacity: '0.6'}} variant="light" size="sm" as={ButtonGroup} title={['Sort: ', this.state.sort.text]} alignRight id="bg-nested-dropdown">
                                     {
                                         this.sortOptions.map((option, index) => {
-                                            return (
-                                                <Dropdown.Item key={index} eventKey="1" onClick={() => this.sortBy(option)}>
+                                            return (<div key={index}>
+                                                <Dropdown.Item eventKey={(index+1).toString()} onClick={() => this.sortBy(option)}>
                                                     { this.state.sort.value === option.value ? <Octicon className="octicon" icon={Check}/> : '' } <span>{option.text}</span>
-                                                </Dropdown.Item>
+                                                </Dropdown.Item></div>
                                             )
                                         })
                                     }
@@ -157,17 +166,12 @@ class RepositoriesListContainer extends Component {
                         </ButtonToolbar>
                     </div>
                     {/* Repositories List */}
-                    {/* <div className="before-search-icon position-relative" style={{width: '100%'}}>
-                        <span>
-                            <Octicon className="octicon position-absolute" size={150} icon={Search}/>
-                        </span>
-                        <span style={{transform: 'translate(40px, 32px)'}}>
-                            <Octicon className="octicon position-absolute" size={50} icon={MarkGithub}/>
-                        </span>
-                    </div> */}
-                    <ul className="_list">
-                        {repositories && repositories.items !== undefined ? this.renderRepositoriesResult(repositories.items) : 'It seems you have not search for repositories yet.'}
-                    </ul>
+                    { !(repositories && repositories.total_count)
+                         ? <NotFound></NotFound>
+                         : <ul className="_list">
+                            {this.renderRepositoriesResult(repositories.items)}
+                           </ul>
+                    }
                     {repositories && repositories.total_count && repositories.total_count > 15 ? (
                         <div className="_pagination mx-auto mt-3">
                             <Pagination size="md">
@@ -189,6 +193,7 @@ const mapStateToProps = (state) => {
     console.log(state);
     return {
         repositories: state.search.repositories,
+        loader: state.search.loader
     }
 };
 const searchAll = () => (loadAllBoilerplates());

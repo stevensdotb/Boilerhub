@@ -10,3 +10,10 @@ export const searchBoilerplate = (tool, language) => {
         payload: {tool, language}
     }
 }
+
+export const activateLoader = () => {
+    return {
+        type: 'LOADER',
+        payload: { loader: true }
+    }
+}

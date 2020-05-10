@@ -4,7 +4,7 @@ import '../../components/sidebar/sidebar.css';
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { searchBoilerplate } from '../actions/search';
+import { searchBoilerplate, activateLoader } from '../actions/search';
 
 // React-Bootstrap Components
 import Button from 'react-bootstrap/Button';
@@ -41,7 +41,7 @@ class SideBarContainer extends Component {
      */
     loadLanguages() {
         const languages = LanguagesData.map(lang => lang.name).sort((a, b) => a.localeCompare(b));
-        return languages.map(language => (<div onClick={() => this.pickLanguage(language)}>{language}</div>));
+        return languages.map((language, index) => (<div key={index} onClick={() => this.pickLanguage(language)}>{language}</div>));
     }
 
     /**
@@ -65,8 +65,8 @@ class SideBarContainer extends Component {
      * repositories on GitHub
      */
     searchRepos = () => {
+        this.props.actLoader();
         this.props.search(this.state.tool, this.state.language);
-        console.log(this.props);
     }
 
     render() {
@@ -94,6 +94,7 @@ class SideBarContainer extends Component {
                                     </div>
                                 </div>
                                 <div className={`select-dropdown ${!this.state.activeDropdown ? 'close' : 'open'}`}>
+                                    <div style={{backgroundColor: '#2B3137'}} onClick={() => this.pickLanguage('')}>[None]</div>
                                     {this.loadLanguages()}
                                 </div>
                             </div>
@@ -122,9 +123,12 @@ const mapStateToProps = (state) => {
         search: state.search,
     }
 };
+
 const search = (tool, language) => (searchBoilerplate(tool, language));
+const actLoader = () => (activateLoader()); // Activate loader
+
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({search}, dispatch);
+    return bindActionCreators({search, actLoader}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarContainer);
