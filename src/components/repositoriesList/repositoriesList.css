@@ -69,6 +69,12 @@
 .boilerhub-repositories ._sort .dropdown-menu .dropdown-item:last-child {
     border-bottom: none;
 }
+.boilerhub-repositories ._pagination {
+    position: fixed;
+    bottom: 25px;
+    right: 46px;
+    box-shadow: 0 3px 12px rgba(27,31,35,.15);
+}
 
 @media only screen and (min-width: 1600px) {
     .boilerhub-repositories{
