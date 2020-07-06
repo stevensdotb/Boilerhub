@@ -3,14 +3,16 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import loaderSvg from '../../octocat-spinner-128.gif';
 import moment from 'moment';
+import numeral from 'numeral';
 import languages from 'language-map';
 // Octicons
-import Octicon, {Repo, PrimitiveDot, ChevronDown, Check, Search, MarkGithub} from '@primer/octicons-react';
-import { ButtonGroup, ButtonToolbar, DropdownButton, Dropdown, Pagination} from 'react-bootstrap';
+import Octicon, {Repo, PrimitiveDot, ChevronDown, Check, Star} from '@primer/octicons-react';
+import { ButtonGroup, ButtonToolbar, DropdownButton, Dropdown } from 'react-bootstrap';
 
-import { loadAllBoilerplates } from '../../redux/actions/search';
+import { loadAllBoilerplates, activateLoader } from '../../redux/actions/search';
 
 import NotFound from '../../components/notFound/notfound';
+import Paginator from '../../components/pagination/pagination';
 
 class RepositoriesListContainer extends Component {
 
@@ -41,8 +43,8 @@ class RepositoriesListContainer extends Component {
             activateLoader: false,
             repositories: {}
         }
-        this.props.searchAll();
-        console.log(moment('2020-05-10T05:03:13Z').fromNow())
+        this.props.activateLoader();
+        this.props.loadAllBoilerplates();
         
     }
     
@@ -63,27 +65,21 @@ class RepositoriesListContainer extends Component {
         }
     }
 
-
+    /**
+     * Number by commas format
+     * @param {*} num 
+     */
     formatNumber = (num) => {
         return !num ? 0 : num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
     }
 
-    setPagination = () => {
-        let active = 2;
-        let items = [];
-        for (let number = 1; number <= 5; number++) {
-            items.push(
-                <Pagination.Item key={number} active={number === active}>
-                {number}
-                </Pagination.Item>,
-            );
-        }
-
-        return items.map(item => (item));
+    setPagination = (navigation) => {
+        return (
+            <Paginator navigation={navigation}></Paginator>
+        )
     }
 
     sortBy = (option) => {
-        // console.log(this.props);
         this.setState(prevState => ({
             sort: {
                 ...prevState.sort,
@@ -93,14 +89,13 @@ class RepositoriesListContainer extends Component {
         }));
     }
 
-    setLanguage() {
-        return this.progLangDot[Math.floor(Math.random()*this.progLangDot.length)];
-    }
-
     renderRepositoriesResult = (repositories) => {
         return repositories.map((repo, index) => {
+
             const language = languages[repo.language];
             const updated = moment(new Date(repo.updatedAt)).fromNow();
+            const stargazers = numeral(repo.stargazers).format('0.0a');
+
             return (
                     <li className="_item d-flex py-4" key={index}>
                         <div className="flex-shrink-0 mr-2">
@@ -112,15 +107,21 @@ class RepositoriesListContainer extends Component {
                                 {/* django/<b>django</b></a> */}
                             </div>
                             <p className="_description">{repo.description}</p>
-                            <div className="_details d-flex text-small text-gray">
+                            <div className="_details d-flex align-items-center text-small text-gray">
+                                <div className="mr-3">
+                                    <span style={{color: '#55555'}}><Octicon icon={Star} className="mr-1"/></span>
+                                    <span>{stargazers}</span>
+                                </div>
                                 {repo.language !== null ? (
-                                    <div className="mr-3">
-                                        <span style={{color: !language || !language.color ? '#55555' : language.color}}><Octicon icon={PrimitiveDot} className="mr-1"/></span>
-                                        {repo.language}
+                                    <div className="mr-3 d-flex align-items-center">
+                                        <span className="language-dot" style={{color: !language || !language.color ? '#55555' : language.color}}>
+                                            <Octicon icon={PrimitiveDot} size={25} className="mr-1"/>
+                                        </span>
+                                        <span>{repo.language}</span>
                                     </div>
                                 ) : null}
                                 <div className="mr-3">
-                                    Updated {updated}
+                                    <span>Updated {updated}</span>
                                 </div>
                             </div>
                         </div>
@@ -130,12 +131,11 @@ class RepositoriesListContainer extends Component {
     }
 
     toggleLoader() {
-        return 
+        return this.props.loader 
+            ? (<img src={loaderSvg} alt="Github Loader" width={35}/>) : null;
     }
 
     render() {
-        console.log(this.props);
-        const { loader } = this.props;
         const { repositories } = this.state;
         const totalCount = repositories && repositories.total_count ? this.formatNumber(repositories.total_count) : 0;
 
@@ -146,7 +146,7 @@ class RepositoriesListContainer extends Component {
                     <div className="_results pb-3 pt-3">
                         <ButtonToolbar className="justify-content-between align-items-center btn-sm" aria-label="Toolbar with Button groups">
                             <h3>{totalCount} repositories result</h3>
-                            {repositories && !repositories.items ? <img src={loaderSvg} alt="Github Loader" width={35}/> : null}
+                            {this.toggleLoader()}
                             <ButtonGroup aria-label="First group" className="_sort position-relative">
                                 
                                 <Octicon className="octicon position-absolute" icon={ChevronDown}/>
@@ -172,15 +172,9 @@ class RepositoriesListContainer extends Component {
                             {this.renderRepositoriesResult(repositories.items)}
                            </ul>
                     }
-                    {repositories && repositories.total_count && repositories.total_count > 15 ? (
+                    {repositories && repositories.nav ? (
                         <div className="_pagination mx-auto mt-3">
-                            <Pagination size="md">
-                                <Pagination.First />
-                                <Pagination.Prev />
-                                {this.setPagination()}
-                                <Pagination.Next />
-                                <Pagination.Last />
-                            </Pagination>
+                            {this.setPagination(repositories.nav)}
                         </div>
                     ) : null}
 
@@ -190,14 +184,13 @@ class RepositoriesListContainer extends Component {
     }
 }
 const mapStateToProps = (state) => {
-    console.log(state);
     return {
+        ...state.search,
         repositories: state.search.repositories,
         loader: state.search.loader
     }
 };
-const searchAll = () => (loadAllBoilerplates());
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({searchAll}, dispatch);
+    return bindActionCreators({loadAllBoilerplates, activateLoader}, dispatch);
 }
 export default connect(mapStateToProps, mapDispatchToProps)(RepositoriesListContainer);

@@ -5,32 +5,32 @@
     overflow-y: scroll;
 }
 
-.boilerhub-repositories ._results {
+._results {
     border-bottom: 1px solid var(--grey-separator);
     background-color: white;
     z-index: 2;
     position: sticky;
     top: 0;
 }
-.boilerhub-repositories ._results > div {
+._results > div {
     padding: 0 !important;
 }
 
-.boilerhub-repositories ._list ._item + ._item {
+._list ._item + ._item {
     border-top: 1px solid var(--grey-separator);
 }
 
-.boilerhub-repositories ._list ._item ._info ._details div > svg{
+._list ._item ._info ._details div > svg{
     transform: scale(1.3);
     margin-right: 2px;
 }
 
-.boilerhub-repositories ._sort .octicon {
+._sort .octicon {
     right: 8px;
     bottom: 7px;
     z-index: 2;
 }
-.boilerhub-repositories ._sort button {
+._sort button {
     margin: 0;
     width: auto;
     border: 1px solid rgba(27,31,35,.2);
@@ -40,36 +40,36 @@
     text-align: left;
     padding-right: 25px;
 }
-.boilerhub-repositories ._sort button::after {
+._sort button::after {
     display: none !important;
 }
 
-.boilerhub-repositories ._sort .dropdown-menu{
+._sort .dropdown-menu{
     padding: 0;
     box-shadow: 0 3px 12px rgba(27,31,35,.15);
 }
 
-.boilerhub-repositories ._sort .dropdown-menu .dropdown-item {
+._sort .dropdown-menu .dropdown-item {
     padding: 8px 8px 8px 30px;
     border-bottom: 1px solid #eaecef;
     font-size: 14px;
 }
 
-.boilerhub-repositories ._sort .dropdown-menu .dropdown-item:hover {
-    background-color: var(--blue);
+._sort .dropdown-menu .dropdown-item:hover {
+    background-color: var(--main-black);
     color: white;
 }
 
-.boilerhub-repositories ._sort .dropdown-menu .dropdown-item .octicon {
+._sort .dropdown-menu .dropdown-item .octicon {
     float: left;
     margin-left: -20px;
     transform: translateY(2px)
 }
 
-.boilerhub-repositories ._sort .dropdown-menu .dropdown-item:last-child {
+._sort .dropdown-menu .dropdown-item:last-child {
     border-bottom: none;
 }
-.boilerhub-repositories ._pagination {
+._pagination {
     position: fixed;
     bottom: 25px;
     right: 46px;

@@ -27,8 +27,6 @@ class SideBarContainer extends Component {
         }        
         this.setBoilerplateTool = this.setBoilerplateTool.bind(this);
     }
-    
-    componentWillMount() { }
 
     /**
      * Toggle the Language select dropdown
@@ -65,8 +63,9 @@ class SideBarContainer extends Component {
      * repositories on GitHub
      */
     searchRepos = () => {
-        this.props.actLoader();
+        this.props.activateLoader();
         this.props.search(this.state.tool, this.state.language);
+
     }
 
     render() {
@@ -124,11 +123,10 @@ const mapStateToProps = (state) => {
     }
 };
 
-const search = (tool, language) => (searchBoilerplate(tool, language));
-const actLoader = () => (activateLoader()); // Activate loader
+const search = (tool, language) => (searchBoilerplate('', tool, language));
 
 const mapDispatchToProps = (dispatch) => {
-    return bindActionCreators({search, actLoader}, dispatch);
+    return bindActionCreators({search, activateLoader}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SideBarContainer);

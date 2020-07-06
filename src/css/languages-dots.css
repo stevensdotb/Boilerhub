@@ -10,3 +10,7 @@
 .shell-dot { fill: #89e051 !important; }
 .typescript-dot { fill: #2b7489 !important; }
 .default-dot { fill: #555555 !important}
+
+.language-dot svg {
+    vertical-align: text-top !important;
+}

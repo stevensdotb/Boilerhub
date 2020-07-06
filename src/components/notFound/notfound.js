@@ -5,7 +5,7 @@ import './notFound.css'
 function NotFound() {
     
     return (
-        <div class="not-found-wrapper">
+        <div className="not-found-wrapper">
             <div className="not-found-logo">
                 <Octicon className="octicon" size={100} icon={MarkGithub}/>
             </div>
