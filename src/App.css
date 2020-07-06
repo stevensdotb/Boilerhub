@@ -2,7 +2,7 @@
   font-family: 'Source Sans Pro', sans-serif;
   display: flex;
   height: 100vh;
-  font-size: 15px;
+  font-size: 17px;
 }
 
 h3, h4 {
@@ -24,7 +24,7 @@ p {
 }
 
 .text-small {
-  font-size: 13px;
+  font-size: 14px;
 }
 
 .text-gray {
