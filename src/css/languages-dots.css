@@ -1,0 +1,16 @@
+
+/* Programming languages DOTs */
+.c-dot { fill: #555555 !important; }
+.cplus-dot { fill: #f34b7d !important; }
+.html-dot { fill: #e34c26 !important; }
+.javascript-dot { fill: #f1e05a !important; }
+.java-dot { fill: #b07219 !important; }
+.php-dot { fill: #4F5D95 !important; }
+.python-dot { fill: #3572A5 !important;}
+.shell-dot { fill: #89e051 !important; }
+.typescript-dot { fill: #2b7489 !important; }
+.default-dot { fill: #555555 !important}
+
+.language-dot svg {
+    vertical-align: text-top !important;
+}

@@ -1,0 +1,83 @@
+.boilerhub-repositories {
+    flex: 3;
+    height: 100%;
+    padding: 0 30px 20px;
+    overflow-y: scroll;
+}
+
+._results {
+    border-bottom: 1px solid var(--grey-separator);
+    background-color: white;
+    z-index: 2;
+    position: sticky;
+    top: 0;
+}
+._results > div {
+    padding: 0 !important;
+}
+
+._list ._item + ._item {
+    border-top: 1px solid var(--grey-separator);
+}
+
+._list ._item ._info ._details div > svg{
+    transform: scale(1.3);
+    margin-right: 2px;
+}
+
+._sort .octicon {
+    right: 8px;
+    bottom: 7px;
+    z-index: 2;
+}
+._sort button {
+    margin: 0;
+    width: auto;
+    border: 1px solid rgba(27,31,35,.2);
+    border-radius: .2rem !important;
+    background-color: #e6ebf1;
+    background-image: linear-gradient(-180deg,#f0f3f6,#e6ebf1 90%);
+    text-align: left;
+    padding-right: 25px;
+}
+._sort button::after {
+    display: none !important;
+}
+
+._sort .dropdown-menu{
+    padding: 0;
+    box-shadow: 0 3px 12px rgba(27,31,35,.15);
+}
+
+._sort .dropdown-menu .dropdown-item {
+    padding: 8px 8px 8px 30px;
+    border-bottom: 1px solid #eaecef;
+    font-size: 14px;
+}
+
+._sort .dropdown-menu .dropdown-item:hover {
+    background-color: var(--main-black);
+    color: white;
+}
+
+._sort .dropdown-menu .dropdown-item .octicon {
+    float: left;
+    margin-left: -20px;
+    transform: translateY(2px)
+}
+
+._sort .dropdown-menu .dropdown-item:last-child {
+    border-bottom: none;
+}
+._pagination {
+    position: fixed;
+    bottom: 25px;
+    right: 46px;
+    box-shadow: 0 3px 12px rgba(27,31,35,.15);
+}
+
+@media only screen and (min-width: 1600px) {
+    .boilerhub-repositories{
+        flex: 5 1;
+     }
+}
